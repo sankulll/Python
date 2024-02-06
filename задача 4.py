@@ -1,15 +1,14 @@
-# Задача 4: Петя, Катя и Сережа делают из бумаги журавликов. Вместе они сделали S журавликов. 
-# Сколько журавликов сделал каждый ребенок, если известно, что Петя и Сережа сделали одинаковое количество журавликов, 
-# а Катя сделала в два раза больше журавликов, чем Петя и Сережа вместе?
-# *Пример:*
+import random
+import pandas as pd
 
-# 6 -> 1  4  1
-# 24 -> 4  16  4
-#     60 -> 10  40  10
+lst = ['robot'] * 10
+lst += ['human'] * 10
+random.shuffle(lst)
 
-S = int(input("Введите общее количество журавликов: "))
-if not S % 6:
-     x = S // 6
-     print(f'Катя {x * 4} ')
-     print(f'Сережа {x} ')
-     print(f'Петя {x}')
+data = pd.DataFrame({'whoAmI': lst})
+
+one_hot = pd.get_dummies(data['whoAmI'])
+data_one_hot = pd.concat([data, one_hot], axis=1)
+data_one_hot.drop('whoAmI', axis=1, inplace=True)
+
+data_one_hot.head()
